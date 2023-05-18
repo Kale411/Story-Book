@@ -1,0 +1,25 @@
+<div class="container">
+        <h1 class="py-2">Edit Story</h1>
+        <form action="/auth/dashboard" method="get">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" required name="title" id="" aria-describedby="emailHelpId" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="story">Tell us your story</label>
+                <textarea class="form-control" required name="body" id="story" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="">Status</label>
+                <select class="custom-select" required name="status" id="status">
+                    <option selected disabled >Select one</option>
+                    <option value="public">public</option>
+                    <option value="private">private</option>
+                </select>
+            </div>
+            <div class="row">
+                <input type="submit" value="Edit story" class="btn btn-primary mr-3">
+                <a href="/auth/dashboard" class="btn btn-danger">Cancel</a>
+            </div>
+        </form>
+    </div>
