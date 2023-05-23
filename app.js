@@ -1,23 +1,34 @@
-const express = require('express')
-const dotenv = require('dotenv')
-const hbs = require('express-handlebars')
-const path = require('path')
+const express = require("express");
+const dotenv = require("dotenv");
+const hbs = require("express-handlebars");
+const path = require("path");
+const sequelize = require("./config/connection");
 
 const app = express();
-// Use body parser to
-app.use(express.urlencoded({extended:false}))
-app.engine('hbs', hbs.create({
-    extname: 'hbs',
-    defaultLayout: 'main'
-}).engine)
+app.use(express.urlencoded({ extended: false }));
 
-app.set('view engine','.hbs')
+app.engine(
+  "hbs",
+  hbs.create({
+    extname: "hbs",
+    defaultLayout: "main",
+  }).engine
+);
 
-//routes
-app.use('/auth',require('./routes/auth'))
-app.use('/stories',require('./routes/stories'))
+app.set("view engine", "hbs");
 
-app.use(express.static(path.join(__dirname,'public')))
-const PORT =  process.env.PORT || 4001
+// routes
+app.use("/auth", require("./routes/auth"));
+app.use("/stories", require("./routes/stories"));
 
-app.listen(PORT,console.log(`server running in ${process.env.NODE_ENV} mode in ${PORT}`))
+app.use(express.static(path.join(__dirname, "public")));
+
+const PORT = process.env.PORT || 4000;
+sequelize
+  .sync({ force: true })
+  .then(() => {
+    app.listen(PORT, console.log(`Server running in mode in ${PORT}`));
+  })
+  .catch((error) => {
+    console.error("Error syncing tables:", error);
+  });
